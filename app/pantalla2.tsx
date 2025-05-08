@@ -6,7 +6,7 @@ export default function Pantalla2() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Pantalla 2</Text>
+      <Text style={styles.text}>Marcas Unicas2 </Text>
 
       {/* Contenedor de imágenes */}
       <View style={styles.imageContainer}>

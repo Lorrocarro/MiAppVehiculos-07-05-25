@@ -6,7 +6,7 @@ export default function Pantalla1() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Pantalla 1</Text>
+      <Text style={styles.text}>Estas en una aventura1 </Text>
 
       {/* Sección de imágenes */}
       <View style={styles.imageContainer}>
@@ -16,7 +16,7 @@ export default function Pantalla1() {
       </View>
 
       {/* Botón de navegación */}
-      <Button title="Ir a Pantalla2" onPress={() => router.push('/pantalla2')} />
+      <Button title="Continua" onPress={() => router.push('/pantalla2')} />
     </View>
   );
 }

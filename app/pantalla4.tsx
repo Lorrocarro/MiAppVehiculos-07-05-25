@@ -6,7 +6,7 @@ export default function Pantalla4() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Pantalla 4</Text>
+      <Text style={styles.text}>Esta aventura cambia4</Text>
 
       {/* Contenedor de imágenes */}
       <View style={styles.imageContainer}>

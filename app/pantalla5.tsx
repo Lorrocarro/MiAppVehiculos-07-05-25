@@ -6,7 +6,7 @@ export default function Pantalla5() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Pantalla 5</Text>
+      <Text style={styles.text}>Esta marca Inspira5</Text>
 
       {/* Contenedor de imágenes */}
       <View style={styles.imageContainer}>
