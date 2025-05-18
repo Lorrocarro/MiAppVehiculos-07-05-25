@@ -10,9 +10,9 @@ export default function Pantalla3() {
 
       {/* Contenedor de imágenes */}
       <View style={styles.imageContainer}>
-        <Image source={require('../assets/imagen/carG.png')} style={styles.image} />
-        <Image source={require('../assets/imagen/carH.png')} style={styles.image} />
-        <Image source={require('../assets/imagen/carI.png')} style={styles.image} />
+        <Image source={require('../assets/images/carG.png')} style={styles.image} />
+        <Image source={require('../assets/images/carH.png')} style={styles.image} />
+        <Image source={require('../assets/images/carI.png')} style={styles.image} />
       </View>
 
       {/* Botón de navegación */}

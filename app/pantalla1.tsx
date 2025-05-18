@@ -1,61 +1,76 @@
-import { useRouter } from 'expo-router';
-import { Button, Image, StyleSheet, Text, View } from 'react-native';
+import { useRouter } from "expo-router";
+import { useState } from "react";
+import { Button, Image, Text, TouchableOpacity, View } from "react-native";
+import Video from "react-native-video";
+import styles from "./styles/stylesPantalla1";
 
-export default function Pantalla1() {
+const VEHICLES = [
+  {
+    id: "carA",
+    image: require("../assets/images/carA.png"),
+    name: "Ford Modelo T",
+    motor: "Gasolina 4 cilindros",
+    cilindraje: "2870 cc",
+    modelo: 1908,
+    precio: "$15,000 USD",
+  },
+  {
+    id: "carB",
+    image: require("../assets/images/carB.png"),
+    name: "Chevrolet Bel Air",
+    motor: "V8 4.6L",
+    cilindraje: "4600 cc",
+    modelo: 1957,
+    precio: "$30,000 USD",
+  },
+  {
+    id: "carC",
+    image: require("../assets/images/carC.png"),
+    name: "Cadillac Eldorado",
+    motor: "V8 8.2L",
+    cilindraje: "8200 cc",
+    modelo: 1972,
+    precio: "$25,000 USD",
+  },
+];
+
+export default function PantallaAntiguos() {
   const router = useRouter();
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Estas en una aventura1 </Text>
+      <Text style={styles.text}>Bienvenido a la categoría de vehículos antiguos</Text>
 
-      {/* Sección de imágenes */}
+      <Video source={require("../assets/videos/video1.mp4")} style={styles.video} resizeMode="cover" controls={true} />
+
       <View style={styles.imageContainer}>
-        <Image source={require('../assets/imagen/carA.png')} style={styles.image} />
-        <Image source={require('../assets/imagen/carB.png')} style={styles.image} />
-        <Image source={require('../assets/imagen/carC.png')} style={styles.image} />
+        {VEHICLES.map((vehicle, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => {
+              console.log("Cambiando estado a:", vehicle.id);
+              setSelectedVehicle(selectedVehicle === vehicle.id ? null : vehicle.id);
+            }}
+          >
+            <Image source={vehicle.image} style={styles.image} />
+            {selectedVehicle === vehicle.id && (
+              <View style={styles.infoContainer}>
+                <Text style={styles.name}>{vehicle.name}</Text>
+                <Text style={styles.specs}>Motor: {vehicle.motor}</Text>
+                <Text style={styles.specs}>Cilindraje: {vehicle.cilindraje}</Text>
+                <Text style={styles.specs}>Modelo: {vehicle.modelo}</Text>
+                <Text style={styles.price}>Precio: {vehicle.precio}</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        ))}
       </View>
 
-      {/* Botón de navegación */}
-      <Button title="Continua" onPress={() => router.push('/pantalla2')} />
+      <View style={styles.buttonContainer}>
+        <Button title="Atrás" onPress={() => router.back()} />
+        <Button title="Siguiente" onPress={() => router.push("/pantalla2")} />
+      </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#f4f4f4',
-    paddingVertical: 30,
-    paddingHorizontal: 20,
-  },
-  text: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: '#222',
-    marginTop: 10,
-  },
-  imageContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '100%',
-    marginVertical: 20,
-  },
-  image: {
-    width: 110,
-    height: 110,
-    borderRadius: 12,
-    marginHorizontal: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor: '#fff',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '80%',
-    marginBottom: 20,
-  },
-});

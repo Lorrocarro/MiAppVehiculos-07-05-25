@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "MiAppVehiculos",
+    "entryPoint": "./app/index.tsx",
     "slug": "MiAppVehiculos",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,14 +10,16 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.huguandres.MiAppVehiculos"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.huguandres.MiAppVehiculos"
     },
     "web": {
       "bundler": "metro",
@@ -33,10 +36,24 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enablePngCrunchInReleaseBuilds": false
+          }
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d4a648d0-4f1b-4b3d-af62-2060809755b9"
+      }
     }
   }
 }

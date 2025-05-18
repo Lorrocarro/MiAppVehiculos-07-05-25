@@ -1,0 +1,56 @@
+import { Audio, Video } from "expo-av";
+import { useEffect, useRef } from "react";
+import { View, Text, StyleSheet } from "react-native";
+
+export default function Pantalla1() {
+  const video = useRef(null);
+  const sound = useRef(null);
+
+  useEffect(() => {
+    const playSound = async () => {
+      try {
+        const { sound: playbackObject } = await Audio.Sound.createAsync(
+          require("../assets/audio/musica.mp3")
+        );
+        sound.current = playbackObject;
+        await sound.current.playAsync();
+      } catch (error) {
+        console.log("Error loading or playing sound:", error);
+      }
+    };
+
+    playSound();
+
+    // Cleanup al desmontar
+    return () => {
+      if (sound.current) {
+        sound.current.unloadAsync();
+      }
+    };
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Video + Música con expo-av</Text>
+      <Video
+        ref={video}
+        source={{ uri: "https://www.w3schools.com/html/mov_bbb.mp4" }}
+        useNativeControls
+        resizeMode="contain"
+        style={{ width: 300, height: 200 }}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+});

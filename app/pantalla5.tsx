@@ -10,9 +10,9 @@ export default function Pantalla5() {
 
       {/* Contenedor de imágenes */}
       <View style={styles.imageContainer}>
-        <Image source={require('../assets/imagen/carÑ.png')} style={styles.image} />
-        <Image source={require('../assets/imagen/carO.png')} style={styles.image} />
-        <Image source={require('../assets/imagen/carP.png')} style={styles.image} />
+        <Image source={require('../assets/images/carÑ.png')} style={styles.image} />
+        <Image source={require('../assets/images/carO.png')} style={styles.image} />
+        <Image source={require('../assets/images/carP.png')} style={styles.image} />
       </View>
 
       {/* Botón de navegación */}

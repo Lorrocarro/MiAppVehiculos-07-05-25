@@ -10,9 +10,9 @@ export default function Pantalla6() {
 
       {/* Contenedor de imágenes */}
       <View style={styles.imageContainer}>
-        <Image source={require('../assets/imagen/carQ.png')} style={styles.image} />
-        <Image source={require('../assets/imagen/carR.png')} style={styles.image} />
-        <Image source={require('../assets/imagen/carS.png')} style={styles.image} />
+        <Image source={require('../assets/images/carQ.png')} style={styles.image} />
+        <Image source={require('../assets/images/carR.png')} style={styles.image} />
+        <Image source={require('../assets/images/carS.png')} style={styles.image} />
       </View>
 
       {/* Botón de navegación */}
