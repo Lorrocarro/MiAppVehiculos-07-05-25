@@ -1,8 +1,15 @@
+import { Audio, Video } from "expo-av";
 import { useRouter } from "expo-router";
-import { useState } from "react";
-import { Button, Image, Text, TouchableOpacity, View } from "react-native";
-import Video from "react-native-video";
-import styles from "./styles/stylesPantalla1";
+import { useEffect, useRef, useState } from "react";
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import styles from "../assets/styles/stylesPantalla1";
+import VehicleCard from "../components/VehicleCard";
 
 const VEHICLES = [
   {
@@ -34,43 +41,84 @@ const VEHICLES = [
   },
 ];
 
-export default function PantallaAntiguos() {
+export default function Pantalla1() {
   const router = useRouter();
-  const [selectedVehicle, setSelectedVehicle] = useState(null);
+  const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    Audio.setAudioModeAsync({
+      allowsRecordingIOS: false,
+      staysActiveInBackground: true,
+      playsInSilentModeIOS: true,
+      shouldDuckAndroid: false,
+    });
+  }, []);
+
+  const filteredVehicles = searchTerm.length > 0
+    ? VEHICLES.filter((vehicle) =>
+        vehicle.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
+      )
+    : VEHICLES;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Bienvenido a la categoría de vehículos antiguos</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.text}>Un viaje al pasado</Text>
 
-      <Video source={require("../assets/videos/video1.mp4")} style={styles.video} resizeMode="cover" controls={true} />
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Buscar vehículo..."
+          value={searchTerm}
+          onChangeText={setSearchTerm}
+        />
+    <View style={{ alignItems: "center", marginVertical: 20 }}></View>
+      <Video
+        ref={videoRef}
+        source={require("../assets/videos/video2.mp4")}
+        style={styles.video}
+        isLooping
+        useNativeControls
+        shouldPlay
+        volume={1.0}
+      />
 
-      <View style={styles.imageContainer}>
-        {VEHICLES.map((vehicle, index) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => {
-              console.log("Cambiando estado a:", vehicle.id);
-              setSelectedVehicle(selectedVehicle === vehicle.id ? null : vehicle.id);
-            }}
-          >
-            <Image source={vehicle.image} style={styles.image} />
-            {selectedVehicle === vehicle.id && (
-              <View style={styles.infoContainer}>
-                <Text style={styles.name}>{vehicle.name}</Text>
-                <Text style={styles.specs}>Motor: {vehicle.motor}</Text>
-                <Text style={styles.specs}>Cilindraje: {vehicle.cilindraje}</Text>
-                <Text style={styles.specs}>Modelo: {vehicle.modelo}</Text>
-                <Text style={styles.price}>Precio: {vehicle.precio}</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-        ))}
-      </View>
+
+    </View>
+
+
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <View style={styles.imageContainer}>
+          {filteredVehicles.map((vehicle, index) => (
+            <VehicleCard
+              key={index}
+              vehicle={vehicle}
+              selected={selectedVehicle === vehicle.id}
+              onPress={() =>
+                setSelectedVehicle(
+                  selectedVehicle === vehicle.id ? null : vehicle.id
+                )
+              }
+            />
+          ))}
+        </View>
+      </ScrollView>
 
       <View style={styles.buttonContainer}>
-        <Button title="Atrás" onPress={() => router.back()} />
-        <Button title="Siguiente" onPress={() => router.push("/pantalla2")} />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.push("/")}
+        >
+          <Text style={styles.buttonText}>{"<"}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.push("/pantalla2")}
+        >
+          <Text style={styles.buttonText}>{">"}</Text>
+        </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }

@@ -1,66 +1,118 @@
-import { useRouter } from 'expo-router';
-import { Button, Image, StyleSheet, Text, View } from 'react-native';
+import { Audio, Video } from "expo-av";
+import { useRouter } from "expo-router";
+import { useEffect, useRef, useState } from "react";
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import styles from "../assets/styles/stylesPantalla3";
+import VehicleCard from "../components/VehicleCard";
+
+const VEHICLES = [
+  {
+    id: "carG",
+    image: require("../assets/images/carG.png"),
+    name: "Jeep Wrangler",
+    motor: "V6 3.6L",
+    cilindraje: "3600 cc",
+    modelo: 2023,
+    precio: "$40,000 USD",
+  },
+  {
+    id: "carH",
+    image: require("../assets/images/carH.png"),
+    name: "Land Rover Defender",
+    motor: "Diesel 2.0L",
+    cilindraje: "2000 cc",
+    modelo: 2022,
+    precio: "$55,000 USD",
+  },
+  {
+    id: "carI",
+    image: require("../assets/images/carI.png"),
+    name: "Toyota Land Cruiser",
+    motor: "V8 4.5L",
+    cilindraje: "4500 cc",
+    modelo: 2023,
+    precio: "$70,000 USD",
+  },
+];
 
 export default function Pantalla3() {
   const router = useRouter();
+  const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    Audio.setAudioModeAsync({
+      allowsRecordingIOS: false,
+      staysActiveInBackground: false,
+      playsInSilentModeIOS: true,
+      shouldDuckAndroid: true,
+    });
+  }, []);
+
+  const filteredVehicles = searchTerm.length > 0
+    ? VEHICLES.filter(vehicle =>
+        vehicle.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
+      )
+    : VEHICLES;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Vive esta aventura3</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.text}>Tus emociones te elevan</Text>
 
-      {/* Contenedor de imágenes */}
-      <View style={styles.imageContainer}>
-        <Image source={require('../assets/images/carG.png')} style={styles.image} />
-        <Image source={require('../assets/images/carH.png')} style={styles.image} />
-        <Image source={require('../assets/images/carI.png')} style={styles.image} />
+    
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Buscar vehículo..."
+          value={searchTerm}
+          onChangeText={setSearchTerm}
+        />
       </View>
 
-      {/* Botón de navegación */}
+
+      <View style={{ alignItems: "center", marginVertical: 20 }}></View>
+      <Video
+        ref={videoRef}
+        source={require("../assets/videos/video3.mp4")}
+        style={styles.video}
+        isLooping
+        useNativeControls
+        shouldPlay
+        volume={1.0}
+      />
+
+      
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <View style={styles.imageContainer}>
+          {filteredVehicles.map((vehicle, index) => (
+            <VehicleCard
+              key={index}
+              vehicle={vehicle}
+              selected={selectedVehicle === vehicle.id}
+              onPress={() =>
+                setSelectedVehicle(selectedVehicle === vehicle.id ? null : vehicle.id)
+              }
+            />
+          ))}
+        </View>
+      </ScrollView>
+
+      
       <View style={styles.buttonContainer}>
-        <Button title="Atrás" onPress={() => router.back()} />
-        <Button title="Siguiente" onPress={() => router.push('/pantalla4')} />
+        <TouchableOpacity style={styles.button} onPress={() => router.push("/pantalla2")}>
+          <Text style={styles.buttonText}>{"<"}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => router.push("/pantalla4")}>
+          <Text style={styles.buttonText}>{">"}</Text>
+        </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#f4f4f4',
-    paddingVertical: 30,
-    paddingHorizontal: 20,
-  },
-  text: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: '#222',
-    marginTop: 10,
-  },
-  imageContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '100%',
-    marginVertical: 20,
-  },
-  image: {
-    width: 110,
-    height: 110,
-    borderRadius: 12,
-    marginHorizontal: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor: '#fff',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '80%',
-    marginBottom: 20,
-  },
-});
-
-

@@ -2,8 +2,8 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "space-between",
+    flexGrow: 1,
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#f4f4f4",
     paddingVertical: 30,
@@ -14,13 +14,30 @@ export default StyleSheet.create({
     fontWeight: "bold",
     color: "#222",
     marginTop: 10,
+    marginBottom: 10,
     textAlign: "center",
   },
-  video: {
+  searchContainer: {
     width: "100%",
-    height: 200,
+    alignItems: "center",
+    marginVertical: 10,
+  },
+  searchInput: {
+    width: "100%",
+    height: 50,
+    fontSize: 18,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#ccc",
     borderRadius: 10,
-    marginBottom: 20,
+    backgroundColor: "#fff",
+  },
+  video: {
+    width: "110%",
+    height: 200,
+    marginVertical: 15,
+    borderRadius: 10,
+    
   },
   imageContainer: {
     flexDirection: "row",
@@ -38,6 +55,17 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     backgroundColor: "#fff",
+  },
+  infoContainer: {
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 5,
   },
   name: {
     fontSize: 18,
@@ -60,7 +88,21 @@ export default StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "80%",
-    marginBottom: 20,
+    width: "60%",
+    marginTop: 10,
+    marginBottom: 30,
+  },
+  button: {
+    backgroundColor: "#1E90FF",
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 10,
+    alignItems: "center",
+    marginHorizontal: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 24,
+    fontWeight: "bold",
   },
 });
